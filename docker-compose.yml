@@ -1,0 +1,39 @@
+services:
+  backend:
+    build: ./server
+    container_name: express-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URL: mongodb://mongo:27017/mydb
+
+  frontend:
+    build: ./client
+    container_name: react-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      VITE_API_URL: http://localhost:3000
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:6
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+

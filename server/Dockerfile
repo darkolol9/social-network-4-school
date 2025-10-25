@@ -1,15 +1,14 @@
-FROM node:18
+FROM node:20
 
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
 
-# Copy everything (but will be overridden by volume for dev)
-COPY . .
+# Install tsx for dev TS execution
+RUN npm install -g tsx
 
-# Install nodemon globally for hot reload
-RUN npm install -g nodemon
+COPY . .
 
 EXPOSE 3000
 
