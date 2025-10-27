@@ -10,7 +10,7 @@ interface LayoutProps {
 
 const Layout = ({ children, hideNav = false }: LayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col justify-center w-screen">
+    <div className="min-h-screen flex flex-col">
       {/* Navbar */}
       {!hideNav ? <Navbar brand={<span className="text-yellow-400 font-bold">Fache-book</span>}>
         <Link
@@ -35,7 +35,7 @@ const Layout = ({ children, hideNav = false }: LayoutProps) => {
       }
 
       {/* Page content */}
-      <main className="flex-1 bg-gray-50 p-4 flex flex-row justify-center ">{children}</main>
+      <main className="flex-1 bg-gray-50">{children}</main>
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white p-4 text-center">

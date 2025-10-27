@@ -22,15 +22,10 @@ const Home = () => {
 
   return (
     <Layout hideNav={false}>
-      <div className=" flex flex-col items-center flex-1 min-h-full">
-
-        <div id="post-creation-form-sticky" className="w-full flex items-center justify-center mb-2">
-          <NewPostForm />
+      <div className="w-full flex flex-col items-center">
+        <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-8rem)]">
+          <PostsContainer posts={feedPosts} />
         </div>
-
-
-        <PostsContainer posts={feedPosts} />
-
       </div>
     </Layout>
   )

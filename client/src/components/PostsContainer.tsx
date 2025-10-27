@@ -7,7 +7,10 @@ interface PostsContainerProps {
 
 const PostsContainer: React.FC<PostsContainerProps> = ({ posts }) => {
   return (
-    <div id="posts-container" className="bg-purple-400 w-full flex flex-col gap-4 max-h-full">
+    <div
+      id="posts-container"
+      className="w-full flex flex-col gap-4"
+    >
       {
         posts.map(post => (
           <PostCard content={post.text} timestamp="" username="" avatarUrl="" imageUrl="" key={post._id} />))
