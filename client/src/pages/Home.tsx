@@ -34,21 +34,21 @@ const Home = () => {
 
   return (
     <Layout hideNav={false}>
-      <div className="w-full flex gap-6 bg-red-500 max-h-[calc(100vh-4rem)]">
+      <div className="w-full flex gap-6 h-[calc(100vh-9rem)]">
         {/* Groups Panel - Left Side */}
-        <div className="hidden xl:block overflow-y-auto">
+        <div className="hidden xl:block overflow-y-auto h-full">
           <GroupsPanel />
         </div>
 
         {/* Main Content - Center */}
         <div className="flex-1 flex flex-col items-center">
-          <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-2rem)]">
+          <div className="w-full max-w-2xl px-3 overflow-y-auto pt-3 h-[calc(100vh-2rem)]">
             <PostsContainer posts={feedPosts} />
           </div>
         </div>
 
         {/* Friends Panel - Right Side */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block h-full">
           <FriendsPanel />
         </div>
       </div>

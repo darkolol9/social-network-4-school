@@ -160,6 +160,16 @@ const GroupsPanel = () => {
           </div>
         </div>
 
+        {/* Create Group Button */}
+        <div className="mb-4">
+          <button className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-xl hover:from-green-600 hover:to-teal-700 transition-all duration-200 font-medium">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Create Group
+          </button>
+        </div>
+
         {/* Search Bar */}
         <div className="relative mb-4">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -219,7 +229,7 @@ const GroupsPanel = () => {
             </p>
           </div>
         ) : (
-          <div className="p-2">
+          <div className="p-2 space-y-1">
             {filteredGroups.map((group) => (
               <GroupItem
                 key={group.id}
@@ -233,15 +243,6 @@ const GroupsPanel = () => {
         )}
       </div>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-gray-100">
-        <button className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-xl hover:from-green-600 hover:to-teal-700 transition-all duration-200 font-medium">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-          Create Group
-        </button>
-      </div>
     </div>
   );
 };

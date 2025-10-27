@@ -90,7 +90,7 @@ const FriendsPanel = () => {
   };
 
   return (
-    <div className="w-80 bg-white rounded-2xl shadow-lg border border-gray-200  h-full flex flex-col">
+    <div className="w-80 bg-white rounded-2xl shadow-lg border border-gray-200 h-[calc(100vh-8rem)] flex flex-col">
       {/* Header */}
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-center justify-between mb-4">
@@ -98,6 +98,16 @@ const FriendsPanel = () => {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
           </div>
+        </div>
+
+        {/* Add Friends Button */}
+        <div className="mb-4">
+          <button className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-200 font-medium">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Add Friends
+          </button>
         </div>
 
         {/* Tabs */}
@@ -174,7 +184,7 @@ const FriendsPanel = () => {
               </p>
             </div>
           ) : (
-            <div className="p-2">
+            <div className="p-2 space-y-1">
               {filteredFriends.map((friend) => (
                 <FriendItem
                   key={friend._id}
@@ -197,7 +207,7 @@ const FriendsPanel = () => {
               </p>
             </div>
           ) : (
-            <div className="p-2">
+            <div className="p-2 space-y-1">
               {filteredRequests.map((request) => (
                 <div key={request.creatorId._id} className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-xl transition-colors duration-200 group">
                   {/* Avatar */}
@@ -259,15 +269,6 @@ const FriendsPanel = () => {
         )}
       </div>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-gray-100">
-        <button className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-200 font-medium">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-          Add Friends
-        </button>
-      </div>
     </div>
   );
 };
