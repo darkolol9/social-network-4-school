@@ -35,6 +35,7 @@ app.post("/friends/handle-request", [Middleware.userAuth], Utils.tryCatch(UserCo
 
 app.get("/posts", [Middleware.userAuth], Utils.tryCatch(PostsController.getFeed));
 app.get("/friends/requests", [Middleware.userAuth], Utils.tryCatch(UserController.getUserSocials));
+app.get("/users/search", [Middleware.userAuth], Utils.tryCatch(UserController.findUsers));
 
 
 

@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import FriendItem from "./FriendItem";
+import AddFriendsModal from "./AddFriendsModal";
 import { Http } from "../utils/Http";
 import { useNotification } from "../providers/NotificationProvider";
 
@@ -31,6 +32,7 @@ const FriendsPanel = () => {
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [requests, setRequests] = useState<FriendRequest[]>([]);
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [isAddFriendsModalOpen, setIsAddFriendsModalOpen] = useState(false);
   const { show } = useNotification();
 
   useEffect(() => {
@@ -89,6 +91,18 @@ const FriendsPanel = () => {
     // TODO: Implement decline friend request functionality
   };
 
+  const handleFriendAdded = () => {
+    // Refresh friends and requests data
+    Http.getFromServer("/friends/requests")
+      .then((res) => {
+        setRequests(res.data.pendingRequests || []);
+        setFriends(res.data.friends || []);
+      })
+      .catch(err => {
+        console.error("Error refreshing friends data:", err);
+      });
+  };
+
   return (
     <div className="w-80 bg-white rounded-2xl shadow-lg border border-gray-200 h-[calc(100vh-8rem)] flex flex-col">
       {/* Header */}
@@ -102,7 +116,10 @@ const FriendsPanel = () => {
 
         {/* Add Friends Button */}
         <div className="mb-4">
-          <button className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-200 font-medium">
+          <button 
+            onClick={() => setIsAddFriendsModalOpen(true)}
+            className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-200 font-medium"
+          >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
@@ -269,6 +286,12 @@ const FriendsPanel = () => {
         )}
       </div>
 
+      {/* Add Friends Modal */}
+      <AddFriendsModal
+        isOpen={isAddFriendsModalOpen}
+        onClose={() => setIsAddFriendsModalOpen(false)}
+        onFriendAdded={handleFriendAdded}
+      />
     </div>
   );
 };

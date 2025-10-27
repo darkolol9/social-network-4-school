@@ -34,6 +34,17 @@ export const createFriendRequest = async (req, res) => {
 }
 
 
+export const findUsers = async (req, res) => {
+  const user = req.body;
+  const { q } = req.query;
+
+  const users = await UserModel.find({ name: { $regex: q, $options: "i" } })
+
+  res.send({status: "success", users: users.map(user => ({...user.toObject(), password: undefined, friends: undefined}))})
+
+}
+
+
 export const handleFriendRequest = async (req, res) => {
   const user = req.user;
 
@@ -59,7 +70,7 @@ export const handleFriendRequest = async (req, res) => {
   }
 
 
-  res.send({status: "success"})
+  res.send({ status: "success" })
 }
 
 
