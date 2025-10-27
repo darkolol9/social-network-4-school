@@ -11,5 +11,5 @@ COPY . .
 EXPOSE 3000
 
 # Use tsx from local dependencies (not global)
-CMD ["npx", "tsx", "--watch", "src/index.ts"]
+CMD ["npm", "run", "dev"]
 

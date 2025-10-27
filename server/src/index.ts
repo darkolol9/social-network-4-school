@@ -1,10 +1,9 @@
 import express from "express";
-import { UserModel } from "./models/Users";
 
 import mongoose from "mongoose";
+import { Utills } from "./Utils";
+import { AuthController } from "./controllers/AuthController";
 const app = express();
-
-
 
 try {
   mongoose.connect(process.env.MONGO_URL!).then(() => console.log("DB connected"));
@@ -13,24 +12,23 @@ try {
   console.error("❌ MongoDB connection error:", err);
 }
 
+app.use(express.json());
 
 
-app.get("/create", async (req, res) => {
 
-  await UserModel.create({
-    email: "test@user.com",
-    password: "password"
-  })
+app.post("/sign_up", Utills.tryCatch(AuthController.signUp))
 
-  res.send("user created");
+app.post("/sign_in", Utills.tryCatch(AuthController.signIn));
 
-});
+
+
+
+
 
 
 
 app.get("/", async (req, res) => {
-  console.log("hello world");
-  res.send("hiiii2222222")
+  res.send("healthy")
 })
 
 

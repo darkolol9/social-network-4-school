@@ -11,6 +11,7 @@ services:
       - mongo
     environment:
       MONGO_URL: mongodb://mongo:27017/mydb
+      TSX_WATCH_POLL: "true"  # Enable polling
 
   frontend:
     build: ./client
