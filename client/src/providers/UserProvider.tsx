@@ -10,13 +10,15 @@ export interface User {
 interface UserContextType {
   user: User | null;
   logUserIn: (user: User) => void
+  logUserOut: () => void
   isLoggedIn: boolean
 }
 
 export const UserContext = React.createContext<UserContextType>({
   user: null,
   isLoggedIn: false,
-  logUserIn: (user: User) => {}
+  logUserIn: (user: User) => {},
+  logUserOut: () => {}
 });
 
 interface UserProviderProps {
@@ -32,10 +34,17 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     setUser(user);
     setIsLoggedIn(true);
 
-
-    console.log(user);
     localStorage.setItem("token", user.token);
     localStorage.setItem("user", JSON.stringify(user));
+  }
+
+
+  const logUserOut = () => {
+    setUser(null);
+    setIsLoggedIn(false);
+
+    localStorage.setItem("token", "");
+    localStorage.setItem("user", "");
   }
 
 
@@ -50,7 +59,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [])
 
   return (
-    <UserContext.Provider value={{ user, logUserIn, isLoggedIn }}>
+    <UserContext.Provider value={{ user, logUserIn, isLoggedIn, logUserOut }}>
       {children}
     </UserContext.Provider>
   );

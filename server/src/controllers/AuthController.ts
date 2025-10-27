@@ -9,14 +9,16 @@ export const signUp = async (req, res) => {
   if (existingUser) {
     throw new Error("user already exists!")
   }
+
+  const token = Utils.generateToken();
   const user = await UserModel.create({
     email,
     password,
     name,
-    token: Utils.generateToken()
+    token
   })
 
-  res.send({ status: "success", user: { ...user, password: undefined } });
+  res.send({ status: "success", user: { ...user.toObject(), password: undefined } });
 }
 
 export const signIn = async (req, res) => {
@@ -33,9 +35,7 @@ export const signIn = async (req, res) => {
   await UserModel.updateOne({ email }, { token });
 
 
-  console.log({user})
-
-  res.send({ status: "success", user: { ...user, password: undefined } });
+  res.send({ status: "success", user: { ...user.toObject(), password: undefined, token } });
 }
 
 

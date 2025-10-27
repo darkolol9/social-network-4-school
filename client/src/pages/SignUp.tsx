@@ -26,11 +26,10 @@ const SignUpPage = () => {
     e.preventDefault();
 
     const hashedForm = { ...form, password: await Tokenizer.hashPassword(form.password) }
-    console.log("Form submitted", hashedForm);
 
     Http.postToServer("/sign_up", hashedForm)
       .then((res: any) => {
-        userContext.logUserIn(res.data.user._doc as User)
+        userContext.logUserIn(res.data.user as User)
         navigate("/")
       })
       .catch((err) => {
@@ -52,87 +51,108 @@ const SignUpPage = () => {
 
   return (
     <Layout hideNav>
-      <div className="flex justify-center items-center min-h-full w-full">
-        <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-            Create Account
-          </h2>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-gray-700 font-medium mb-1"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                value={form.name}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                placeholder="Your full name"
-                required
-              />
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          {/* Brand Section */}
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-xl">F</span>
+              </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Fache-book
+              </h1>
             </div>
+            <p className="text-gray-600 text-lg">Join our community! Create your account to get started.</p>
+          </div>
 
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-gray-700 font-medium mb-1"
+          {/* Sign Up Form */}
+          <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8">
+            <h2 className="text-2xl font-bold mb-8 text-gray-900 text-center">
+              Create Account
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-gray-700 font-semibold mb-2 text-sm"
+                >
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-gray-700 font-semibold mb-2 text-sm"
+                >
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-gray-700 font-semibold mb-2 text-sm"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                  placeholder="Create a strong password"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={form.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                placeholder="you@example.com"
-                required
-              />
+                Create Account
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-gray-600">
+                Already have an account?{" "}
+                <Link 
+                  to="/login" 
+                  className="text-purple-600 hover:text-blue-600 font-semibold hover:underline transition-colors duration-200"
+                >
+                  Sign in here
+                </Link>
+              </p>
             </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-gray-700 font-medium mb-1"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                value={form.password}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                placeholder="********"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded-md transition-colors"
-            >
-              Sign Up
-            </button>
-          </form>
-
-          <p className="mt-4 text-center text-gray-600">
-            Already have an account?{" "}
-            <Link to="/login" className="text-yellow-400 hover:underline">
-              Log in
-            </Link>
-          </p>
+          </div>
         </div>
       </div>
-    </Layout >
+    </Layout>
   );
 };
 
