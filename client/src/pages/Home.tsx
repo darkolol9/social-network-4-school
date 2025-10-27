@@ -6,6 +6,7 @@ import { Http } from "../utils/Http";
 import PostsContainer from "../components/PostsContainer";
 import NewPostForm from "../components/NewPostForm";
 import Modal from "../components/Modal";
+import FriendsPanel from "../components/FriendsPanel";
 
 const Home = () => {
 
@@ -32,9 +33,17 @@ const Home = () => {
 
   return (
     <Layout hideNav={false}>
-      <div className="w-full flex flex-col items-center">
-        <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-8rem)]">
-          <PostsContainer posts={feedPosts} />
+      <div className="w-full flex gap-6">
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col items-center">
+          <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-8rem)]">
+            <PostsContainer posts={feedPosts} />
+          </div>
+        </div>
+
+        {/* Friends Panel */}
+        <div className="hidden lg:block">
+          <FriendsPanel />
         </div>
       </div>
       

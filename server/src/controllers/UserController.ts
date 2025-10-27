@@ -34,5 +34,46 @@ export const createFriendRequest = async (req, res) => {
 }
 
 
+export const handleFriendRequest = async (req, res) => {
+  const user = req.user;
+
+  const { requestId, action } = req.body;
+
+
+  const request = await FriendRequestModel.findOne({ _id: requestId });
+
+  if (!request) {
+    throw new Error("missing requestId or invalid request")
+  } else if (request.status !== "pending") {
+    throw new Error("invalid request status");
+  } else if (!["accept", "reject"].includes(action)) {
+    throw new Error("invalid action");
+  }
+
+  await FriendRequestModel.updateOne({ _id: requestId }, { status: action });
+
+
+  if (action === "accept") {
+    await UserModel.updateOne({ _id: user._id }, { $push: { friends: request.creatorId } });
+    await UserModel.updateOne({ _id: request.creatorId }, { $push: { friends: user._id } });
+  }
+
+
+  res.send({status: "success"})
+}
+
+
+
+export const getUserSocials = async (req, res) => {
+  const user = req.user;
+
+  const pendingReqs = await FriendRequestModel.find({ targetId: user._id, status: "pending" })
+    .populate("creatorId")
+
+  const userWithFriends = await UserModel.findOne({ _id: user._id }).populate("friends")
+
+  res.send({ status: "success", pendingRequests: pendingReqs, friends: userWithFriends!.friends });
+}
+
 
 export * as UserController from "./UserController";

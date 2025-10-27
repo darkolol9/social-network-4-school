@@ -30,10 +30,15 @@ app.post("/sign_out", Utils.tryCatch(AuthController.signOut));
 app.post("/group/create", [Middleware.userAuth], Utils.tryCatch(GroupsController.create));
 app.post("/post/create", [Middleware.userAuth], Utils.tryCatch(PostsController.create));
 app.post("/friends/request", [Middleware.userAuth], Utils.tryCatch(UserController.createFriendRequest));
+app.post("/friends/handle-request", [Middleware.userAuth], Utils.tryCatch(UserController.handleFriendRequest));
+
+
+app.get("/posts", [Middleware.userAuth], Utils.tryCatch(PostsController.getFeed));
+app.get("/friends/requests", [Middleware.userAuth], Utils.tryCatch(UserController.getUserSocials));
+
 
 
 //get
-app.get("/posts", [Middleware.userAuth], Utils.tryCatch(PostsController.getFeed));
 app.get("/", async (req, res) => {
   res.send("healthy")
 })
