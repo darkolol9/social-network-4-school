@@ -5,12 +5,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# Install tsx for dev TS execution
-RUN npm install -g tsx
-
+# Copy source AFTER install so node_modules stays inside image
 COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+# Use tsx from local dependencies (not global)
+CMD ["npx", "tsx", "--watch", "src/index.ts"]
 
