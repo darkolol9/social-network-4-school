@@ -15,10 +15,8 @@ try {
 }
 
 
-
 //midleware
 app.use(express.json());
-
 
 
 
@@ -35,7 +33,6 @@ app.post("/group/create", [Middleware.userAuth], Utils.tryCatch(GroupsController
 app.get("/", async (req, res) => {
   res.send("healthy")
 })
-
 
 
 app.listen(3000, () => {
