@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 interface PostCardProps {
-  username: string;
-  avatarUrl?: string;
+  authorName: string;
+  authorUsername: string;
   timestamp: string; // use string for dates (your rule)
   content: string;
   imageUrl?: string;
@@ -14,8 +14,8 @@ interface PostCardProps {
 }
 
 export const PostCard: React.FC<PostCardProps> = ({
-  username,
-  avatarUrl,
+  authorName,
+  authorUsername,
   timestamp,
   content,
   imageUrl,
@@ -43,21 +43,19 @@ export const PostCard: React.FC<PostCardProps> = ({
       {/* Header */}
       <div className="flex items-center gap-4 mb-4">
         <div className="relative">
-          <img
-            src={avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${username}`}
-            alt={username}
-            className="w-12 h-12 rounded-full object-cover border-2 border-gray-200 shadow-sm"
-          />
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg border-2 border-gray-200 shadow-sm">
+            {authorName.charAt(0).toUpperCase()}
+          </div>
           <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
         </div>
         <div className="flex-1">
           <div className="flex items-center gap-2">
-            <p className="font-semibold text-gray-900 text-lg">{username}</p>
+            <p className="font-semibold text-gray-900 text-lg">{authorName}</p>
             <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
               Verified
             </span>
           </div>
-          <p className="text-sm text-gray-500">{formatTimestamp(timestamp)}</p>
+          <p className="text-sm text-gray-500">@{authorUsername} • {formatTimestamp(timestamp)}</p>
         </div>
         <button className="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-gray-100 rounded-full">
           <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">

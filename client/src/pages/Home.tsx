@@ -36,7 +36,7 @@ const Home = () => {
       <div className="w-full flex gap-6">
         {/* Main Content */}
         <div className="flex-1 flex flex-col items-center">
-          <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-8rem)]">
+          <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-8rem)] pt-5">
             <PostsContainer posts={feedPosts} />
           </div>
         </div>

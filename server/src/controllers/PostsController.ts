@@ -26,7 +26,7 @@ export const create = async (req, res) => {
 export const getFeed = async (req, res) => {
   // const user = req.user;
 
-  const allPosts = await PostModel.find();
+  const allPosts = await PostModel.find().populate("authorId");
 
   res.send({posts: allPosts});
 

@@ -13,5 +13,9 @@ export interface Post {
   text: string;
   _id: string;
   created_at: Date;
+  authorId: {
+    name: string;
+    email: string;
+  };
 }
 

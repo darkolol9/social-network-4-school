@@ -3,7 +3,7 @@ import FriendItem from "./FriendItem";
 import { Http } from "../utils/Http";
 
 interface Friend {
-  id: string;
+  _id: string;
   name: string;
   username: string;
   avatar?: string;
@@ -21,7 +21,6 @@ interface FriendRequest {
   mutualFriends?: number;
   sentAt: string;
 }
-
 
 
 
@@ -162,7 +161,7 @@ const FriendsPanel = () => {
             <div className="p-2">
               {filteredFriends.map((friend) => (
                 <FriendItem
-                  key={friend.id}
+                  key={friend._id}
                   friend={friend}
                   onChat={handleChat}
                   onViewProfile={handleViewProfile}
