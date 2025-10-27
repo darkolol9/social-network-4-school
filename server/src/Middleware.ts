@@ -7,11 +7,8 @@ export const userAuth = async (req, res, next) => {
     const { token } = req.headers;
 
 
-    console.log({token})
-
     const user = await UserModel.findOne({ token });
     if (!user) {
-      console.log("user not found")
       throw new Error("invalid token");
     } 
 

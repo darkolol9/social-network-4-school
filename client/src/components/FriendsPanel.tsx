@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import FriendItem from "./FriendItem";
 import { Http } from "../utils/Http";
+import { useNotification } from "../providers/NotificationProvider";
 
 interface Friend {
   _id: string;
@@ -30,6 +31,7 @@ const FriendsPanel = () => {
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [requests, setRequests] = useState<FriendRequest[]>([]);
   const [friends, setFriends] = useState<Friend[]>([]);
+  const { show } = useNotification();
 
   useEffect(() => {
     Http.getFromServer("/friends/requests")
@@ -64,8 +66,22 @@ const FriendsPanel = () => {
     Http.postToServer("/friends/handle-request", {
       requestId: requestId,
       action: "accept"
-    }).then((res) => console.log(res))
-    // TODO: Implement accept friend request functionality
+    }).then((res) => {
+      show({
+        title: "Success",
+        description: res.data.message || "",
+        color: "green",
+        duration: 5000
+      })
+    })
+      .catch(err => {
+        show({
+          title: "Error",
+          description: err.response.data.error,
+          color: "red",
+          duration: 5000
+        })
+      })
   };
 
   const handleDeclineRequest = (requestId: string) => {

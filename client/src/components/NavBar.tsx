@@ -1,5 +1,6 @@
 import { useState, ReactNode, useContext } from "react";
 import { UserContext } from "../providers/UserProvider";
+import { Link } from "react-router-dom";
 
 interface NavbarProps {
   children: ReactNode;
@@ -22,7 +23,9 @@ export default function Navbar({ children, brand }: NavbarProps) {
                   <span className="text-white font-bold text-sm">F</span>
                 </div>
                 <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Fache-book
+                  <Link to="/">
+                    Fache-book
+                  </Link>
                 </span>
               </div>
             )}
@@ -57,8 +60,8 @@ export default function Navbar({ children, brand }: NavbarProps) {
                 U
               </div>
               <div className="hidden lg:block">
-                <p className="text-sm font-medium text-gray-900">User Name</p>
-                <p className="text-xs text-gray-500">@username</p>
+                <p className="text-sm font-medium text-gray-900">{userContext?.user?.name}</p>
+                <p className="text-xs text-gray-500">{userContext?.user?.email}</p>
               </div>
               
               {/* Logout Button */}
