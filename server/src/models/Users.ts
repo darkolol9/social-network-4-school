@@ -19,7 +19,11 @@ const UserSchema = new mongoose.Schema(
     },
     token: {
       type: String
-    }
+    },
+    friends: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }]
   },
   {
     timestamps: true, // automatically adds createdAt & updatedAt fields
