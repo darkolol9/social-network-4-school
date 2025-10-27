@@ -1,6 +1,7 @@
 import express from "express";
-
 import mongoose from "mongoose";
+import cors from "cors";
+
 import { Utils } from "./Utils";
 import { AuthController } from "./controllers/AuthController";
 import { GroupsController } from "./controllers/GroupsController";
@@ -17,6 +18,7 @@ try {
 
 //midleware
 app.use(express.json());
+app.use(cors());
 
 
 

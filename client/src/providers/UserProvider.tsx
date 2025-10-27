@@ -1,6 +1,6 @@
 import React, { useState, ReactNode, useEffect } from "react";
 
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
@@ -8,14 +8,14 @@ interface User {
 
 interface UserContextType {
   user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  logUserIn: (user: User) => void
   isLoggedIn: boolean
 }
 
 export const UserContext = React.createContext<UserContextType>({
   user: null,
-  setUser: () => {},
-  isLoggedIn: false
+  isLoggedIn: false,
+  logUserIn: (user: User) => {}
 });
 
 interface UserProviderProps {
@@ -25,6 +25,12 @@ interface UserProviderProps {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+  const logUserIn = (user: User) => {
+    setUser(user);
+    setIsLoggedIn(true);
+  }
 
 
   useEffect(() => {
@@ -38,7 +44,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [])
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoggedIn }}>
+    <UserContext.Provider value={{ user, logUserIn, isLoggedIn }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { UserContext } from "../providers/Usercontext";
+import { UserContext } from "../providers/UserProvider";
 
 interface ProtectedRouteProps {
   children: ReactNode;

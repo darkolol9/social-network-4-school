@@ -3,21 +3,20 @@ import { Utils } from "../Utils";
 
 export const signUp = async (req, res) => {
 
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
 
   const existingUser = await UserModel.findOne({ email });
   if (existingUser) {
     throw new Error("user already exists!")
   }
-
-  await UserModel.create({
+  const user = await UserModel.create({
     email,
-    password
+    password,
+    name,
+    token: Utils.generateToken()
   })
 
-
-  res.send("user created");
-
+  res.send({ status: "success", user: { ...user, password: undefined } });
 }
 
 export const signIn = async (req, res) => {
@@ -32,8 +31,8 @@ export const signIn = async (req, res) => {
   }
 
   await UserModel.updateOne({ email }, { token });
-  res.send({ status: "success", token })
 
+  res.send({ status: "success", user: { ...user, password: undefined } });
 }
 
 
