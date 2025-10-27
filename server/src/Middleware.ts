@@ -1,3 +1,4 @@
+import { UserModel } from "./models/Users";
 
 
 export const userAuth = async (req, res, next) => {
@@ -5,11 +6,19 @@ export const userAuth = async (req, res, next) => {
 
     const { token } = req.headers;
 
-    console.log({token});
+    const user = await UserModel.findOne({ token });
+    if (!user) {
+      console.log("user not found")
+      throw new Error("invalid token");
+    } 
+
+    req.user = user;
+
     next();
 
   } catch(err) {
     console.error("user auth error:", err)
+    res.status(401).json({status: "unauthorized"});
   }
 }
 
