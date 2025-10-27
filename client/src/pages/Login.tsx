@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Layout from "../layouts/MainLayout";
+import { UserContext, type User } from "../providers/UserProvider";
+import { useNavigate } from "react-router-dom";
+import { Tokenizer } from "../utils/Tokenizer";
+import { postToServer } from "../utils/Http";
 
 
 const LoginPage = () => {
+
+  const userContext = useContext(UserContext);
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -12,15 +20,29 @@ const LoginPage = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login submitted", form);
+    const hashedForm = { ...form, password: await Tokenizer.hashPassword(form.password) }
 
-    // Simulate saving token in localStorage
-    localStorage.setItem("token", "fake-jwt-token");
+    console.log({ hashedForm })
 
-    // Redirect logic here or via router
+    postToServer("/sign_in", hashedForm)
+      .then((res: any) => {
+        console.log({ res })
+        userContext.logUserIn(res.data.user._doc as User)
+        navigate("/")
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+
   };
+
+
+  if (userContext.isLoggedIn) {
+    navigate("/");
+  }
+
 
   return (
     <Layout hideNav>

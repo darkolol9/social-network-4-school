@@ -27,7 +27,8 @@ const SignUpPage = () => {
 
     Http.postToServer("/sign_up", hashedForm)
       .then((res: any) => {
-        userContext.logUserIn(res.user as User)
+        console.log({res})
+        userContext.logUserIn(res.data.user._doc as User)
         navigate("/")
       })
       .catch((err) => {
@@ -36,6 +37,11 @@ const SignUpPage = () => {
 
     // Add your API call here
   };
+
+
+  if (userContext.isLoggedIn) {
+    navigate("/");
+  }
 
   return (
     <Layout hideNav>

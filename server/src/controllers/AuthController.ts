@@ -32,6 +32,9 @@ export const signIn = async (req, res) => {
 
   await UserModel.updateOne({ email }, { token });
 
+
+  console.log({user})
+
   res.send({ status: "success", user: { ...user, password: undefined } });
 }
 

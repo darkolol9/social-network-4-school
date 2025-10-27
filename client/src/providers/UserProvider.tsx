@@ -4,6 +4,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  token: string;
 }
 
 interface UserContextType {
@@ -30,6 +31,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const logUserIn = (user: User) => {
     setUser(user);
     setIsLoggedIn(true);
+
+
+    console.log(user);
+    localStorage.setItem("token", user.token);
+    localStorage.setItem("user", JSON.stringify(user));
   }
 
 
