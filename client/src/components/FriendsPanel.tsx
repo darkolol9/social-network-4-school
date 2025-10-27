@@ -90,7 +90,7 @@ const FriendsPanel = () => {
   };
 
   return (
-    <div className="w-80 bg-white rounded-2xl shadow-lg border border-gray-200 h-[calc(100vh-8rem)] flex flex-col">
+    <div className="w-80 bg-white rounded-2xl shadow-lg border border-gray-200  h-full flex flex-col">
       {/* Header */}
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-center justify-between mb-4">

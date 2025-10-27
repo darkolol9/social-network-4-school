@@ -34,15 +34,15 @@ const Home = () => {
 
   return (
     <Layout hideNav={false}>
-      <div className="w-full flex gap-6">
+      <div className="w-full flex gap-6 bg-red-500 max-h-[calc(100vh-4rem)]">
         {/* Groups Panel - Left Side */}
-        <div className="hidden xl:block">
+        <div className="hidden xl:block overflow-y-auto">
           <GroupsPanel />
         </div>
 
         {/* Main Content - Center */}
         <div className="flex-1 flex flex-col items-center">
-          <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-8rem)]">
+          <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-2rem)]">
             <PostsContainer posts={feedPosts} />
           </div>
         </div>
