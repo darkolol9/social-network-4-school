@@ -1,5 +1,5 @@
 import { UserModel } from "../models/Users";
-import { Utills } from "../Utils";
+import { Utils } from "../Utils";
 
 export const signUp = async (req, res) => {
 
@@ -20,10 +20,10 @@ export const signUp = async (req, res) => {
 
 }
 
-
 export const signIn = async (req, res) => {
+
   const { email, password } = req.body;
-  const token = Utills.generateToken();
+  const token = Utils.generateToken();
 
 
   const user = await UserModel.findOne({ email, password });
@@ -33,6 +33,20 @@ export const signIn = async (req, res) => {
 
   await UserModel.updateOne({ email }, { token });
   res.send({ status: "success", token })
+
+}
+
+
+export const signOut = async (req, res) => {
+  const { email, token } = req.body;
+
+  const user = await UserModel.findOne({ email, token });
+  if (!user) {
+    throw new Error("wrong email or token");
+  }
+
+  await UserModel.updateOne({ email }, { token: null });
+  res.send({ status: "success" })
 
 }
 

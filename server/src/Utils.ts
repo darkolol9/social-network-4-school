@@ -8,7 +8,8 @@ export const generateToken = () => {
 export const tryCatch = (fn) => {
   return (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch((err) => {
-      console.error("[error occurred]", err.message);
+      const now = new Date().toLocaleString(); // readable local timestamp
+      console.error(`[${now}][error occurred]`, err.message);
       res.status(500).json({ error: err.message });
     });
   };
@@ -16,4 +17,5 @@ export const tryCatch = (fn) => {
 
 
 
-export * as Utills from "./Utils";
+
+export * as Utils from "./Utils";
