@@ -9,3 +9,9 @@ export interface NotificationItem {
 }
 
 
+export interface Post {
+  text: string;
+  _id: string;
+  created_at: Date;
+}
+

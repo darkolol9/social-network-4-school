@@ -26,14 +26,9 @@ const getConfig = (addToken: boolean) => {
 
 export const getFromServer = async (path: string, addTokenToHeader = true) => {
 
-  try {
-    const config = getConfig(addTokenToHeader);
-    const res = await axios.get(SERVER_URL + path, config);
-    return res;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
+  const config = getConfig(addTokenToHeader);
+  const res = await axios.get(SERVER_URL + path, config);
+  return res;
 
 }
 

@@ -2,7 +2,7 @@ import { GroupModel } from "../models/Groups";
 
 
 
-export const createGroup = async (req, res) => {
+export const create = async (req, res) => {
 
   const { groupName } = req.body;
 
