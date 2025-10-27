@@ -65,7 +65,7 @@ const AddFriendsModal = ({ isOpen, onClose, onFriendAdded }: AddFriendsModalProp
 
   const handleSendFriendRequest = async (userId: string) => {
     try {
-      await Http.postToServer("/friends/send-request", { userId });
+      await Http.postToServer("/friends/request", { targetUserId: userId });
       show({
         title: "Success",
         description: "Friend request sent successfully",

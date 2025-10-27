@@ -1,5 +1,6 @@
 import { FriendRequestModel } from "../models/FriendRequests";
 import { UserModel } from "../models/Users";
+import { Utils } from "../Utils";
 
 
 
@@ -35,13 +36,17 @@ export const createFriendRequest = async (req, res) => {
 
 
 export const findUsers = async (req, res) => {
-  const user = req.body;
+  const user = req.user;
   const { q } = req.query;
 
   const users = await UserModel.find({ name: { $regex: q, $options: "i" } })
+  const usersByMail = await UserModel.find({ email: { $regex: q, $options: "i" } })
 
-  res.send({status: "success", users: users.map(user => ({...user.toObject(), password: undefined, friends: undefined}))})
+  const union = [...users, ...usersByMail];
+  const uniques = Utils.uniqueByFn(union, (item: any) => item.toObject()._id);
+  console.log({uniques})
 
+  res.send({status: "success", users: uniques.filter(u => user._id.toString() !== u._id.toString()).map(user => ({...user.toObject(), password: undefined, friends: undefined}))})
 }
 
 

@@ -8,6 +8,9 @@ import { GroupsController } from "./controllers/GroupsController";
 import { Middleware } from "./Middleware";
 import { PostsController } from "./controllers/PostsController";
 import { UserController } from "./controllers/UserController";
+import { UserModel } from "./models/Users";
+import { FriendRequestModel } from "./models/FriendRequests";
+import { PostModel } from "./models/Posts";
 const app = express();
 
 try {
@@ -37,6 +40,39 @@ app.get("/posts", [Middleware.userAuth], Utils.tryCatch(PostsController.getFeed)
 app.get("/friends/requests", [Middleware.userAuth], Utils.tryCatch(UserController.getUserSocials));
 app.get("/users/search", [Middleware.userAuth], Utils.tryCatch(UserController.findUsers));
 
+
+
+
+app.post("/fake-data", async (req, res) => {
+  const users: any[] = await UserModel.find();
+
+
+
+  //create fake friend requests
+  for (let i = 0; i < users.length; i++) {
+    for (let j = 0; j < users.length; j++) {
+
+      const reqExists = await FriendRequestModel.findOne({ creatorId: users[i]._id, targetId: users[j]._id });
+      if (reqExists) continue;
+      await FriendRequestModel.create({
+        creatorId: users[i]._id,
+        targetId: users[j]._id,
+        status: "pending"
+      })
+    }
+  }
+
+  //create random posts
+  for (const user of users) {
+    await PostModel.create({
+      text: Utils.getRandomSentence(),
+      authorId: user._id
+    })
+  }
+
+
+  res.send({status: "success"})
+})
 
 
 //get
