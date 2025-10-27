@@ -4,12 +4,14 @@ import { UserContext, type User } from "../providers/UserProvider";
 import { useNavigate } from "react-router-dom";
 import { Tokenizer } from "../utils/Tokenizer";
 import { postToServer } from "../utils/Http";
+import { useNotification } from "../providers/NotificationProvider";
 
 
 const LoginPage = () => {
 
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
+  const { show } = useNotification();
 
   const [form, setForm] = useState({
     email: "",
@@ -24,16 +26,19 @@ const LoginPage = () => {
     e.preventDefault();
     const hashedForm = { ...form, password: await Tokenizer.hashPassword(form.password) }
 
-    console.log({ hashedForm })
-
     postToServer("/sign_in", hashedForm)
       .then((res: any) => {
-        console.log({ res })
         userContext.logUserIn(res.data.user._doc as User)
         navigate("/")
       })
       .catch((err) => {
-        console.error(err);
+        show({
+          title: "Error",
+          description: err.response.data.error,
+          color: "red",
+          duration: 5000
+        })
+
       })
 
   };

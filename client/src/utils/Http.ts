@@ -38,14 +38,9 @@ export const getFromServer = async (path: string, addTokenToHeader = true) => {
 }
 
 export const postToServer = async (path: string, body: any, addTokenToHeader = true) => {
-  try {
-    const config = getConfig(addTokenToHeader);
-    const res = await axios.post(SERVER_URL + path, body, config);
-    return res;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
+  const config = getConfig(addTokenToHeader);
+  const res = await axios.post(SERVER_URL + path, body, config);
+  return res;
 }
 
 

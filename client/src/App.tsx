@@ -5,19 +5,22 @@ import SignUpPage from './pages/SignUp';
 import ProtectedRoute from './components/ProtectedRoute';
 import { UserProvider } from './providers/UserProvider';
 import LoginPage from './pages/Login';
+import { NotificationProvider } from './providers/NotificationProvider';
 
 
 function App() {
 
   return (
     <UserProvider>
-      <Router>
-        <Routes>
-          <Route path="" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
-      </Router>
+      <NotificationProvider>
+        <Router>
+          <Routes>
+            <Route path="" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </Router>
+      </NotificationProvider>
     </UserProvider>
 
   )

@@ -4,10 +4,13 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Http } from "../utils/Http";
 import { Tokenizer } from "../utils/Tokenizer";
 import { UserContext, type User } from "../providers/UserProvider";
+import { useNotification } from "../providers/NotificationProvider";
 
 const SignUpPage = () => {
 
   const userContext = useContext(UserContext);
+  const { show, hide } = useNotification();
+
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -27,15 +30,19 @@ const SignUpPage = () => {
 
     Http.postToServer("/sign_up", hashedForm)
       .then((res: any) => {
-        console.log({res})
         userContext.logUserIn(res.data.user._doc as User)
         navigate("/")
       })
       .catch((err) => {
-        console.error(err);
+        show({
+          title: "Error",
+          description: err.response.data.error,
+          color: "red",
+          duration: 5000
+        })
+
       })
 
-    // Add your API call here
   };
 
 
