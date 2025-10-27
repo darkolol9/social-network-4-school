@@ -7,6 +7,7 @@ import PostsContainer from "../components/PostsContainer";
 import NewPostForm from "../components/NewPostForm";
 import Modal from "../components/Modal";
 import FriendsPanel from "../components/FriendsPanel";
+import GroupsPanel from "../components/GroupsPanel";
 
 const Home = () => {
 
@@ -34,14 +35,19 @@ const Home = () => {
   return (
     <Layout hideNav={false}>
       <div className="w-full flex gap-6">
-        {/* Main Content */}
+        {/* Groups Panel - Left Side */}
+        <div className="hidden xl:block">
+          <GroupsPanel />
+        </div>
+
+        {/* Main Content - Center */}
         <div className="flex-1 flex flex-col items-center">
-          <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-8rem)] pt-5">
+          <div className="w-full max-w-2xl px-3 overflow-y-auto h-[calc(100vh-8rem)]">
             <PostsContainer posts={feedPosts} />
           </div>
         </div>
 
-        {/* Friends Panel */}
+        {/* Friends Panel - Right Side */}
         <div className="hidden lg:block">
           <FriendsPanel />
         </div>
