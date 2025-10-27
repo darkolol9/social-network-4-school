@@ -38,9 +38,9 @@ const Layout = ({ children, hideNav = false }: LayoutProps) => {
       <main className="flex-1 bg-gray-50">{children}</main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white p-4 text-center">
-        &copy; {new Date().getFullYear()} Fache-book. All rights reserved.
-      </footer>
+      {/* <footer className="bg-gray-800 text-white p-4 text-center"> */}
+      {/*   &copy; {new Date().getFullYear()} Fache-book. All rights reserved. */}
+      {/* </footer> */}
     </div>
   );
 };
